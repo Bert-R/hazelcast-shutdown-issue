@@ -1,0 +1,57 @@
+description = 'Repro for Hazelcast shutdown issue (hazelcast/hazelcast#6339)'
+
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
+		classpath("io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'eclipse'
+
+jar {
+	baseName = 'HazelcastShutdownRepro'
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	compile("com.hazelcast:hazelcast-spring")
+
+	runtime("org.hsqldb:hsqldb")
+}
+
+group = 'yonadev'
+
+bootRun {
+	enableAssertions=true
+}
+
+bootRepackage {
+        classifier = "full"
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '3.1'
+}
+
+eclipse {
+	classpath {
+		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	}
+}
