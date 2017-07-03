@@ -18,23 +18,20 @@ public class TheApplication extends CachingConfigurerSupport
 {
 	public static void main(String[] args)
 	{
-		try
-		{
-			SpringApplication app = new SpringApplication(TheApplication.class);
-			app.setWebEnvironment(false);
-			app.run(args);
-		}
-		finally
-		{
-			// Hazelcast.shutdownAll();
-		}
+		SpringApplication app = new SpringApplication(TheApplication.class);
+		app.setWebEnvironment(false);
+		app.run(args).close();
 	}
 
 	@Override
 	@Bean
 	public CacheManager cacheManager()
 	{
-		HazelcastInstance client = Hazelcast.newHazelcastInstance(new Config());
-		return new HazelcastCacheManager(client);
+		return new HazelcastCacheManager(hazelcastInstance());
+	}
+
+	@Bean
+	public HazelcastInstance hazelcastInstance() {
+		return Hazelcast.newHazelcastInstance(new Config());
 	}
 }
