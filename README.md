@@ -43,4 +43,4 @@ BUILD SUCCESSFUL
 Total time: 14.534 secs
 ```
 
-Based on what @wilkinsona said on spring-projects/spring-boot#7418, this repo was updated to show the right way of setting up a Hazelcast cache.
+Based on what @wilkinsona said on [spring-projects/spring-boot#7418](https://github.com/spring-projects/spring-boot/issues/7418), this repo was updated to show the right way of setting up a Hazelcast cache.
